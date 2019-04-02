@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   system_events.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/06 20:03:08 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/02 17:11:19 by gstiedem         ###   ########.fr       */
+/*   Created: 2019/03/27 15:01:02 by gstiedem          #+#    #+#             */
+/*   Updated: 2019/04/01 18:37:55 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "fdf.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
-
-# define BUFF_SIZE 1024
-
-typedef struct	s_fdlst
+int	win_close(void *win_ptr)
 {
-	int				fd;
-	char			*content;
-	char			*start;
-	struct s_fdlst	*next;
-}				t_fdlst;
-int				get_next_line(const int fd, char **line);
+	if (g_srv.win_opened == 1)
+		exit (0);
+	mlx_destroy_window(g_srv.mlx_ptr, win_ptr);
+	g_srv.win_opened--;
+	return (0);
+}
 
-#endif
+int	win_expose(void *win_ptr)
+{
+	(void)win_ptr;
+	return (0);
+}

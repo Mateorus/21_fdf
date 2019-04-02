@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/06 20:03:08 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/02 17:11:19 by gstiedem         ###   ########.fr       */
+/*   Created: 2018/11/26 13:05:38 by gstiedem          #+#    #+#             */
+/*   Updated: 2018/12/04 13:10:29 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
-
-# define BUFF_SIZE 1024
-
-typedef struct	s_fdlst
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	int				fd;
-	char			*content;
-	char			*start;
-	struct s_fdlst	*next;
-}				t_fdlst;
-int				get_next_line(const int fd, char **line);
+	size_t srclen;
+	size_t dstlen;
 
-#endif
+	srclen = ft_strlen(src);
+	dstlen = ft_strlen(dst);
+	if (size <= dstlen)
+		return (size + srclen);
+	if (srclen < size - dstlen)
+		ft_memcpy(dst + dstlen, src, srclen + 1);
+	else
+	{
+		ft_memcpy(dst + dstlen, src, size - dstlen - 1);
+		dst[size - 1] = '\0';
+	}
+	return (dstlen + srclen);
+}

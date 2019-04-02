@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/06 20:03:08 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/02 17:11:19 by gstiedem         ###   ########.fr       */
+/*   Created: 2018/11/29 21:24:42 by gstiedem          #+#    #+#             */
+/*   Updated: 2018/11/29 21:49:43 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
-
-# define BUFF_SIZE 1024
-
-typedef struct	s_fdlst
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int				fd;
-	char			*content;
-	char			*start;
-	struct s_fdlst	*next;
-}				t_fdlst;
-int				get_next_line(const int fd, char **line);
+	char	*str;
 
-#endif
+	if (!s1 || !s2)
+		return (NULL);
+	if (!(str = ft_strnew(ft_strlen(s1) + ft_strlen(s2))))
+		return (NULL);
+	ft_memcpy(str, s1, ft_strlen(s1));
+	ft_memcpy(str + ft_strlen(s1), s2, ft_strlen(s2));
+	return (str);
+}

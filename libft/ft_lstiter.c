@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/06 20:03:08 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/02 17:11:19 by gstiedem         ###   ########.fr       */
+/*   Created: 2018/12/03 20:15:14 by gstiedem          #+#    #+#             */
+/*   Updated: 2018/12/03 20:18:20 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
-
-# define BUFF_SIZE 1024
-
-typedef struct	s_fdlst
+void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-	int				fd;
-	char			*content;
-	char			*start;
-	struct s_fdlst	*next;
-}				t_fdlst;
-int				get_next_line(const int fd, char **line);
-
-#endif
+	if (!f)
+		return ;
+	while (lst)
+	{
+		f(lst);
+		lst = lst->next;
+	}
+}

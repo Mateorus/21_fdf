@@ -1,31 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/06 20:03:08 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/02 17:11:19 by gstiedem         ###   ########.fr       */
+/*   Created: 2018/11/26 18:33:02 by gstiedem          #+#    #+#             */
+/*   Updated: 2018/12/04 17:42:36 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
-
-# define BUFF_SIZE 1024
-
-typedef struct	s_fdlst
+int	ft_atoi(const char *str)
 {
-	int				fd;
-	char			*content;
-	char			*start;
-	struct s_fdlst	*next;
-}				t_fdlst;
-int				get_next_line(const int fd, char **line);
+	long long	num;
+	long long	tmp;
+	int			flag;
 
-#endif
+	flag = 1;
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '-')
+	{
+		flag = -1;
+		str++;
+	}
+	else if (*str == '+')
+		str++;
+	num = 0;
+	while (ft_isdigit(*str))
+	{
+		tmp = num;
+		num *= 10;
+		num += *str - '0';
+		if (num < tmp)
+			return (flag == -1 ? 0 : -1);
+		str++;
+	}
+	return (num * flag);
+}

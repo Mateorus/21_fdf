@@ -6,13 +6,11 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 20:02:58 by gstiedem          #+#    #+#             */
-/*   Updated: 2018/12/12 17:24:35 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/02 16:55:58 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdlib.h>
-#include <unistd.h>
 
 t_fdlst	*get_lst(t_fdlst **first, const int fd)
 {
@@ -44,7 +42,7 @@ char	*get_lst_line(t_fdlst *l)
 	if ((tmp = ft_strchr(l->content, '\n')))
 	{
 		*tmp = 0;
-		sub = ft_strsub(l->content, 0, tmp - l->content);
+		sub = ft_strdup(l->content);
 		l->content = tmp + 1;
 	}
 	else
@@ -78,9 +76,9 @@ int		get_next_line(const int fd, char **line)
 {
 	static t_fdlst	*first_lst;
 	t_fdlst			*lst;
-	ssize_t			r;
 	char			buf[BUFF_SIZE + 1];
 	char			*str;
+	ssize_t			r;
 
 	if (!line)
 		return (-1);
