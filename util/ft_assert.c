@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 15:04:31 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/03/27 15:05:20 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/02 17:47:02 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_assert(int i, char *s)
 		if (!s)
 			perror(s);
 		else
-			ft_putstr(s);
+			ft_putstr_fd(s, 2);
 		exit(errno);
 	}
 }

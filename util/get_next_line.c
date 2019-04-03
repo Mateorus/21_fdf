@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 20:02:58 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/02 16:55:58 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/02 17:29:29 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ t_fdlst	*get_lst(t_fdlst **first, const int fd)
 			return (tmp);
 		tmp = tmp->next;
 	}
-	tmp = malloc(sizeof(t_fdlst));
+	if (!(tmp = malloc(sizeof(t_fdlst))))
+		return (NULL);
 	tmp->fd = fd;
 	tmp->content = NULL;
 	tmp->start = NULL;
@@ -82,7 +83,8 @@ int		get_next_line(const int fd, char **line)
 
 	if (!line)
 		return (-1);
-	lst = get_lst(&first_lst, fd);
+	if (!(lst = get_lst(&first_lst, fd)))
+		return (-1);
 	while ((r = read(fd, buf, BUFF_SIZE)))
 	{
 		if (r == -1)

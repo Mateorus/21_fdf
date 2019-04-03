@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   populate_map.c                                     :+:      :+:    :+:   */
+/*   get_nbr.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/02 15:04:27 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/02 15:05:16 by gstiedem         ###   ########.fr       */
+/*   Created: 2019/04/02 21:28:51 by gstiedem          #+#    #+#             */
+/*   Updated: 2019/04/02 21:40:22 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	populate_map(int fd, t_list **mapv)
+int	get_nbr(char **s)
+{
+	int	ret;
 
+	while (ft_isspace(**s))
+		(*s)++;
+	ret = ft_atoi(*s);
+	while (ft_isdigit(**s))
+		(*s)++;
+	return (ret);
+}
