@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 18:34:28 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/03 18:35:11 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/05 15:10:14 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define MAX_WINDOWS	10
 # define WIN_WIDTH		750
 # define WIN_HEIGHT		500
-# define WIN_SCALE		0.9
+# define WIN_SCALE		1
 # define SHIFT			257
 
 # define STD_COLOR		0x00FFFFFF
@@ -46,15 +46,17 @@ typedef struct			s_point
 }						t_point;
 typedef struct			s_win
 {
-	void	*ptr;
-	t_list	*map;
+	void		*ptr;
+	t_point		p;
+	int			mouse_pressed[8];
+	int			key_pressed[280];
+	t_list		*map;
+	size_t		map_w;
+	size_t		map_h;
 }						t_win;
 typedef struct			s_srv
 {
 	void		*mlx_ptr;
-	t_point		p;
-	int			mouse_pressed[8];
-	int			key_pressed[280];
 	int			win_opened;
 }						t_srv;
 extern volatile t_srv	g_srv;
@@ -81,6 +83,11 @@ int		win_expose(t_win *win);
 */
 void	pencil(t_point point , void *win_ptr);
 void	put_line_bresenham(t_point p_a, t_point p_b, void *win_ptr);
+/*
+**_________________________________/src/rescale.c_______________________________
+*/
+void	zoom_in(t_win *win);
+void	zoom_out(t_win *win);
 /*
 ***************************************UTIL*************************************
 */

@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   system_events.c                                    :+:      :+:    :+:   */
+/*   rescale.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/27 15:01:02 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/05 14:41:50 by gstiedem         ###   ########.fr       */
+/*   Created: 2019/04/05 15:01:09 by gstiedem          #+#    #+#             */
+/*   Updated: 2019/04/05 15:19:36 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	win_close(t_win *win)
+void	zoom_in(t_win *win)
 {
-	if (g_srv.win_opened == 1)
-		exit (0);
-	mlx_destroy_window(g_srv.mlx_ptr, win->ptr);
-	g_srv.win_opened--;
-	return (0);
+	size_t	i;
+	t_point	*p;
+	t_list	*tmp;
+
+	tmp = win->map;
+	while (tmp)
+	{
+		i = -1;
+		while (++i < tmp->content_size)
+		{
+			p[i].x +=
+		}
+		tmp = tmp->next;
+	}
 }
 
-int	win_expose(t_win *win)
+void	zoom_out(t_win *win)
 {
-	(void)win;
-	return (0);
+	
 }

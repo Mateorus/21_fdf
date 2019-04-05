@@ -6,7 +6,7 @@
 #    By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 11:47:14 by gstiedem          #+#    #+#              #
-#    Updated: 2019/04/03 18:08:21 by gstiedem         ###   ########.fr        #
+#    Updated: 2019/04/05 15:06:05 by gstiedem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ UTILDIR:=util
 OBJDIR:=obj
 INCLUDE:=-Iinclude -Iminilibx_macos -Ilibft
 SRC:=$(addprefix $(SRCDIR)/,\
-	main.c device_events.c system_events.c paint.c get_map.c put_map.c)
+	main.c device_events.c system_events.c paint.c get_map.c put_map.c\
+	rescale.c)
 UTIL:=$(addprefix $(UTILDIR)/,\
 	get_next_line.c ft_assert.c ft_abs.c ft_swap.c get_nbr.c)
 OBJ:=$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
