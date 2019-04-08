@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 18:34:28 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/05 15:10:14 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/08 19:35:13 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,14 @@
 # define MAX_WINDOWS	10
 # define WIN_WIDTH		750
 # define WIN_HEIGHT		500
-# define WIN_SCALE		1
+# define SCALE_FACTOR	1
+# define RESCALE_FACTOR	0.1
+# define BPP			4
+
 # define SHIFT			257
+# define ESC			53
+# define SCROLL_UP		4
+# define SCROLL_DOWN	5
 
 # define STD_COLOR		0x00FFFFFF
 
@@ -47,12 +53,14 @@ typedef struct			s_point
 typedef struct			s_win
 {
 	void		*ptr;
+	void		*img_ptr;
 	t_point		p;
 	int			mouse_pressed[8];
 	int			key_pressed[280];
 	t_list		*map;
-	size_t		map_w;
-	size_t		map_h;
+	size_t		map_x;
+	size_t		map_y;
+	size_t		scale;
 }						t_win;
 typedef struct			s_srv
 {
@@ -64,7 +72,7 @@ extern volatile t_srv	g_srv;
 ***************************************SRC**************************************
 */
 void	get_map(char **argv, t_win *win);
-void	put_map(t_win *win);
+void	plot_map(t_win *win);
 /*
 **______________________________/src/device_events.c____________________________
 */

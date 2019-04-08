@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 15:01:09 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/05 15:19:36 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/08 18:00:20 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,14 @@
 
 void	zoom_in(t_win *win)
 {
-	size_t	i;
-	t_point	*p;
-	t_list	*tmp;
-
-	tmp = win->map;
-	while (tmp)
-	{
-		i = -1;
-		while (++i < tmp->content_size)
-		{
-			p[i].x +=
-		}
-		tmp = tmp->next;
-	}
+	win->scale += !win->scale ? 1 : ceil(win->scale * RESCALE_FACTOR);
+	mlx_clear_window(g_srv.mlx_ptr, win->ptr);
+	plot_map(win);
 }
 
 void	zoom_out(t_win *win)
 {
-	
+	win->scale -= ceil(win->scale * RESCALE_FACTOR);
+	mlx_clear_window(g_srv.mlx_ptr, win->ptr);
+	plot_map(win);
 }

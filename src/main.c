@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 15:34:41 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/05 14:45:27 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/08 19:44:41 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	init(int size, t_win *win)
 		ft_assert(!(win->ptr = mlx_new_window(g_srv.mlx_ptr, WIN_WIDTH,
 					WIN_HEIGHT, __FILE__)), "mlx_new_window() failed\n");
 		g_srv.win_opened++;
+		ft_assert(!(win->img_ptr = mlx_new_image(g_srv.mlx_ptr, WIN_WIDTH,
+					WIN_HEIGHT)), "mlx_new_image() failed\n");
 		win->p.color = STD_COLOR;
 		mlx_hook(win->ptr, 2, 0, key_press, win);
 		mlx_hook(win->ptr, 3, 0, key_release, win);
@@ -46,7 +48,7 @@ int		main(int argc, char **argv)
 	init(--argc, win);
 	i = -1;
 	while (++i < argc)
-		put_map(&win[i]);
+		plot_map(&win[i]);
 	mlx_loop(g_srv.mlx_ptr);
 	return (0);
 }
