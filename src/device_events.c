@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 14:47:44 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/08 17:27:34 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/10 10:37:31 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ int	mouse_move(int x, int y, t_win *win)
 int	key_press(int keycode, t_win *win)
 {
 	!win->mouse_pressed[1] ? win->key_pressed[keycode] = 1 : 0;
+	keycode == LFT_ARROW ? rotate_x(win, C_CLOCKWISE) : 0;
+	keycode == 126 ? rotate_y(win, C_CLOCKWISE) : 0;
+	keycode == 33 ? rotate_z(win, C_CLOCKWISE) : 0;
 	keycode == ESC ? win_close(win) : 0;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 18:34:28 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/08 19:35:13 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/10 10:36:51 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,27 @@
 # include "libft.h"
 # include "mlx.h"
 
+# define INSIDE			0
+# define LEFT			1
+# define RIGHT			2
+# define BOTTOM			4
+# define TOP			8
+
+# define CLOCKWISE		0
+# define C_CLOCKWISE	1
+# define ROT_ANGLE		0.1
+
 # define MAX_WINDOWS	10
 # define WIN_WIDTH		750
 # define WIN_HEIGHT		500
-# define SCALE_FACTOR	1
-# define RESCALE_FACTOR	0.1
+# define CENTR_FACTOR	0.8
 # define BPP			4
 
 # define SHIFT			257
 # define ESC			53
 # define SCROLL_UP		4
 # define SCROLL_DOWN	5
+# define LFT_ARROW		123
 
 # define STD_COLOR		0x00FFFFFF
 
@@ -50,6 +60,13 @@ typedef struct			s_point
 	int			z;
 	uint32_t	color;
 }						t_point;
+typedef struct			s_img
+{
+	int	*ptr;
+	int	bpp;
+	int	size;
+	int	endian;
+}						t_img;
 typedef struct			s_win
 {
 	void		*ptr;
@@ -60,7 +77,6 @@ typedef struct			s_win
 	t_list		*map;
 	size_t		map_x;
 	size_t		map_y;
-	size_t		scale;
 }						t_win;
 typedef struct			s_srv
 {
@@ -73,6 +89,7 @@ extern volatile t_srv	g_srv;
 */
 void	get_map(char **argv, t_win *win);
 void	plot_map(t_win *win);
+int		line_clip(t_point *p_a, t_point *p_b, t_point incr, t_point diff);
 /*
 **______________________________/src/device_events.c____________________________
 */
@@ -94,8 +111,15 @@ void	put_line_bresenham(t_point p_a, t_point p_b, void *win_ptr);
 /*
 **_________________________________/src/rescale.c_______________________________
 */
+void	centr(t_win *win);
 void	zoom_in(t_win *win);
 void	zoom_out(t_win *win);
+/*
+**_________________________________/src/rotate.c_______________________________
+*/
+void	rotate_x(t_win *win, int direction);
+void	rotate_y(t_win *win, int direction);
+void	rotate_z(t_win *win, int direction);
 /*
 ***************************************UTIL*************************************
 */

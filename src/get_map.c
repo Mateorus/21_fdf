@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:34:25 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/08 19:39:06 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/09 19:08:13 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ void			get_map(char **argv, t_win *win)
 		}
 		ft_assert(res == -1, "get_next_line() failed\n");
 		win->map_y = y;
-		win->scale = WIN_WIDTH < WIN_HEIGHT ? WIN_WIDTH * SCALE_FACTOR
-			/ win->map_x : WIN_HEIGHT * SCALE_FACTOR / win->map_y;
 		win++;
 		close(fd);
 	}
