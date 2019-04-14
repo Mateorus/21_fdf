@@ -6,19 +6,18 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 15:57:22 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/10 10:42:53 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/14 17:08:05 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	rotate_x(t_win *win, int direction)
+void			rotate_x(t_win *win, int direction)
 {
-	size_t	i;
-	int		tmp_;
-	double	f;
-	t_point	prev;
-	t_list	*tmp;
+	size_t		i;
+	float		f;
+	t_fpoint	prev;
+	t_list		*tmp;
 
 	f = direction ? -ROT_ANGLE : ROT_ANGLE;
 	tmp = win->map;
@@ -27,12 +26,10 @@ void	rotate_x(t_win *win, int direction)
 		i = -1;
 		while(++i < tmp->content_size)
 		{
-			prev.y = ((t_point*)tmp->content)[i].y;
-			prev.z = ((t_point*)tmp->content)[i].z;
-			tmp_ = prev.y * cos(f) - prev.z * sin(f);
-			((t_point*)tmp->content)[i].y = tmp_;
-			tmp_ = prev.y * sin(f) + prev.z * cos(f);
-			((t_point*)tmp->content)[i].z = tmp_;
+			prev.y = ((t_fpoint*)tmp->content)[i].y;
+			prev.z = ((t_fpoint*)tmp->content)[i].z;
+			((t_fpoint*)tmp->content)[i].y = prev.y * cos(f) - prev.z * sin(f);
+			((t_fpoint*)tmp->content)[i].z = prev.y * sin(f) + prev.z * cos(f);
 		}
 		tmp = tmp->next;
 	}
@@ -40,13 +37,12 @@ void	rotate_x(t_win *win, int direction)
 	plot_map(win);
 }
 
-void	rotate_y(t_win *win, int direction)
+void			rotate_y(t_win *win, int direction)
 {
-	size_t	i;
-	int		tmp_;
-	double	f;
-	t_point	prev;
-	t_list	*tmp;
+	size_t		i;
+	float		f;
+	t_fpoint	prev;
+	t_list		*tmp;
 
 	f = direction ? -ROT_ANGLE : ROT_ANGLE;
 	tmp = win->map;
@@ -55,12 +51,10 @@ void	rotate_y(t_win *win, int direction)
 		i = -1;
 		while(++i < tmp->content_size)
 		{
-			prev.x = ((t_point*)tmp->content)[i].x;
-			prev.z = ((t_point*)tmp->content)[i].z;
-			tmp_ = prev.x * cos(f) + prev.z * sin(f);
-			((t_point*)tmp->content)[i].x = tmp_;
-			tmp_ = -prev.x * sin(f) + prev.z * cos(f);
-			((t_point*)tmp->content)[i].z = tmp_;
+			prev.x = ((t_fpoint*)tmp->content)[i].x;
+			prev.z = ((t_fpoint*)tmp->content)[i].z;
+			((t_fpoint*)tmp->content)[i].x = prev.x * cos(f) + prev.z * sin(f);
+			((t_fpoint*)tmp->content)[i].z = -prev.x * sin(f) + prev.z * cos(f);
 		}
 		tmp = tmp->next;
 	}
@@ -68,13 +62,12 @@ void	rotate_y(t_win *win, int direction)
 	plot_map(win);
 }
 
-void	rotate_z(t_win *win, int direction)
+void			rotate_z(t_win *win, int direction)
 {
-	size_t	i;
-	int		tmp_;
-	double	f;
-	t_point	prev;
-	t_list	*tmp;
+	size_t		i;
+	float		f;
+	t_fpoint	prev;
+	t_list		*tmp;
 
 	f = direction ? -ROT_ANGLE : ROT_ANGLE;
 	tmp = win->map;
@@ -83,12 +76,10 @@ void	rotate_z(t_win *win, int direction)
 		i = -1;
 		while(++i < tmp->content_size)
 		{
-			prev.x = ((t_point*)tmp->content)[i].x;
-			prev.y = ((t_point*)tmp->content)[i].y;
-			tmp_ = prev.x * cos(f) - prev.y * sin(f);
-			((t_point*)tmp->content)[i].x = tmp_;
-			tmp_ = prev.x * sin(f) + prev.y * cos(f);
-			((t_point*)tmp->content)[i].y = tmp_;
+			prev.x = ((t_fpoint*)tmp->content)[i].x;
+			prev.y = ((t_fpoint*)tmp->content)[i].y;
+			((t_fpoint*)tmp->content)[i].x = prev.x * cos(f) - prev.y * sin(f);
+			((t_fpoint*)tmp->content)[i].y = prev.x * sin(f) + prev.y * cos(f);
 		}
 		tmp = tmp->next;
 	}

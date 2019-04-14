@@ -6,33 +6,32 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:38:14 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/10 16:46:14 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/11 20:44:20 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	put_line(t_point p, t_point diff, t_point incr, t_img img)
+static void		put_line(t_point p, t_point diff, t_point incr, t_img img)
 {
-	int	d;
-	int	len;
-	int	*x;
-	int	*y;
+	int			d;
+	int			len;
+	int			*x;
+	int			*y;
 
-	x = diff.x > diff.y ? &p.x : &p.y;
-	y = diff.x > diff.y ? &p.y : &p.x;
-	len = diff.x > diff.y ? diff.x : diff.y;
-	if (diff.x < diff.y)
+	x = diff.x >= diff.y ? &p.x : &p.y;
+	y = diff.x >= diff.y ? &p.y : &p.x;
+	len = diff.x >= diff.y ? diff.x : diff.y;
+	if (diff.y > diff.x)
 	{
 		ft_swap(&p.x, &p.y);
 		ft_swap(&diff.x, &diff.y);
 		ft_swap(&incr.x, &incr.y);
 	}
 	d = -len;
-	len++;
 	while (len--)
 	{
-		img.ptr[*x + WIN_WIDTH / 2 + (*y + WIN_HEIGHT / 2) * WIN_WIDTH] = p.color;
+		img.ptr[*x + WIDTH / 2 + (*y + HEIGHT / 2) * WIDTH] = p.color;
 		p.x += incr.x;
 		d += diff.y << 1;
 		p.y += d > 0 ? incr.y : 0;
@@ -40,12 +39,12 @@ static void	put_line(t_point p, t_point diff, t_point incr, t_img img)
 	}
 }
 
-static void	put_line_addr(t_point p_a, t_point p_b, t_win *win)
+static void		put_line_addr(t_point p_a, t_point p_b, t_win *win)
 {
-	int		len;
-	t_img	img;
-	t_point	diff;
-	t_point	incr;
+	int			len;
+	t_img		img;
+	t_point		diff;
+	t_point		incr;
 
 	img.ptr = (int*)mlx_get_data_addr(win->img_ptr, &img.bpp,
 										&img.size, &img.endian);
@@ -53,24 +52,22 @@ static void	put_line_addr(t_point p_a, t_point p_b, t_win *win)
 	incr.y = p_b.y - p_a.y >= 0 ? 1 : -1;
 	diff.x = ft_abs(p_b.x - p_a.x);
 	diff.y = ft_abs(p_b.y - p_a.y);
-	if (line_clip(&p_a, &p_b, incr, diff))
-		return;
-	diff.x = ft_abs(p_b.x - p_a.x);
-	diff.y = ft_abs(p_b.y - p_a.y);
 	len = diff.x > diff.y ? diff.x : diff.y;
+	if (line_clip(p_a, p_b, img))
+		return;
 	if (!len)
 	{
-		img.ptr[p_a.x + WIN_WIDTH / 2 + (p_a.y + WIN_HEIGHT / 2) * WIN_WIDTH] = p_a.color;
+		img.ptr[p_a.x + WIDTH / 2 + (p_a.y + HEIGHT / 2) * WIDTH] = p_a.color;
 		return ;
 	}
 	put_line(p_a, diff, incr, img);
 }
 
-static void	plot_line(t_win *win, t_point *p, t_point *pnext, t_list *tmp)
+static void		plot_line(t_win *win, t_fpoint *p, t_fpoint *pnext, t_list *tmp)
 {
-	size_t	i;
-	size_t	size;
-	size_t	size_n;
+	size_t		i;
+	size_t		size;
+	size_t		size_n;
 
 	size = tmp->content_size;
 	size_n = pnext ? tmp->next->content_size : 0;
@@ -78,21 +75,21 @@ static void	plot_line(t_win *win, t_point *p, t_point *pnext, t_list *tmp)
 	while (++i < size)
 	{
 		if (i < size - 1)
-			put_line_addr(p[i], p[i + 1], win);
+			put_line_addr(f_to_i_point(p[i]), f_to_i_point(p[i + 1]), win);
 		if(pnext && i < size_n)
-			put_line_addr(p[i], pnext[i], win);
+			put_line_addr(f_to_i_point(p[i]), f_to_i_point(pnext[i]), win);
 	}
 }
 
-void		plot_map(t_win *win)
+void			plot_map(t_win *win)
 {
-	t_point	*p;
-	t_point	*pnext;
-	t_list	*tmp;
+	t_fpoint	*p;
+	t_fpoint	*pnext;
+	t_list		*tmp;
 
 	tmp = win->map;
-	ft_assert(!(win->img_ptr = mlx_new_image(g_srv.mlx_ptr, WIN_WIDTH,
-				WIN_HEIGHT)), "mlx_new_image() failed\n");
+	ft_assert(!(win->img_ptr = mlx_new_image(g_srv.mlx_ptr, WIDTH,
+				HEIGHT)), "mlx_new_image() failed\n");
 	while (tmp)
 	{
 		p = tmp->content;

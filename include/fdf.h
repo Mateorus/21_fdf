@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 18:34:28 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/10 10:36:51 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/14 15:08:40 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,28 @@
 
 # define CLOCKWISE		0
 # define C_CLOCKWISE	1
-# define ROT_ANGLE		0.1
+# define ROT_ANGLE		0.0872665
 
 # define MAX_WINDOWS	10
-# define WIN_WIDTH		750
-# define WIN_HEIGHT		500
+# define WIDTH			750
+# define HEIGHT			500
 # define CENTR_FACTOR	0.8
+# define RESCALE_FACTOR	1.1
 # define BPP			4
 
 # define SHIFT			257
 # define ESC			53
 # define SCROLL_UP		4
 # define SCROLL_DOWN	5
+# define SPACE			49
 # define LFT_ARROW		123
+# define RGH_ARROW		124
+# define UP_ARROW		126
+# define DWN_ARROW		125
+# define PLUS			24
+# define MINUS			27
+# define LFT_BRACKET	33
+# define RGH_BRACKET	30
 
 # define STD_COLOR		0x00FFFFFF
 
@@ -60,6 +69,13 @@ typedef struct			s_point
 	int			z;
 	uint32_t	color;
 }						t_point;
+typedef struct			s_fpoint
+{
+	float		x;
+	float		y;
+	float		z;
+	uint32_t	color;
+}						t_fpoint;
 typedef struct			s_img
 {
 	int	*ptr;
@@ -75,6 +91,7 @@ typedef struct			s_win
 	int			mouse_pressed[8];
 	int			key_pressed[280];
 	t_list		*map;
+	t_list		*map_copy;
 	size_t		map_x;
 	size_t		map_y;
 }						t_win;
@@ -87,9 +104,9 @@ extern volatile t_srv	g_srv;
 /*
 ***************************************SRC**************************************
 */
-void	get_map(char **argv, t_win *win);
+void	get_maps(char **argv, t_win *win);
 void	plot_map(t_win *win);
-int		line_clip(t_point *p_a, t_point *p_b, t_point incr, t_point diff);
+int		line_clip(t_point p_a, t_point p_b, t_img img);
 /*
 **______________________________/src/device_events.c____________________________
 */
@@ -111,15 +128,18 @@ void	put_line_bresenham(t_point p_a, t_point p_b, void *win_ptr);
 /*
 **_________________________________/src/rescale.c_______________________________
 */
-void	centr(t_win *win);
+void	init_plot(t_win *win);
 void	zoom_in(t_win *win);
 void	zoom_out(t_win *win);
+void	iso(t_win *win);
 /*
 **_________________________________/src/rotate.c_______________________________
 */
 void	rotate_x(t_win *win, int direction);
 void	rotate_y(t_win *win, int direction);
 void	rotate_z(t_win *win, int direction);
+void	alt_dwn(t_win *win);
+void	alt_up(t_win *win);
 /*
 ***************************************UTIL*************************************
 */
@@ -128,5 +148,7 @@ void	ft_assert(int i, char *s);
 int		ft_abs(int n);
 void	ft_swap(int *a, int *b);
 int		get_nbr(char **s);
-
+t_point	f_to_i_point(t_fpoint p);
+void	rev_list(t_list **start);
+size_t	count_num(char *s);
 #endif

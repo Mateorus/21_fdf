@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_swap.c                                          :+:      :+:    :+:   */
+/*   f_to_i_point.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/01 13:47:32 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/10 19:18:25 by gstiedem         ###   ########.fr       */
+/*   Created: 2019/04/10 19:30:10 by gstiedem          #+#    #+#             */
+/*   Updated: 2019/04/11 19:34:17 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_swap(int *a, int *b)
-{
-	int	tmp;
+#include "fdf.h"
 
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
+t_point	f_to_i_point(t_fpoint p)
+{
+	t_point	ip;
+
+	ip.x = p.x < 0 ? p.x - 0.5 : p.x + 0.5;
+	ip.y = p.y < 0 ? p.y - 0.5 : p.y + 0.5;
+	ip.z = p.z < 0 ? p.z - 0.5 : p.z + 0.5;
+	ip.color = p.color;
+	return (ip);
 }

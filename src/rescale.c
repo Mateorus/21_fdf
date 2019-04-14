@@ -6,90 +6,113 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 15:01:09 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/10 17:10:50 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/14 23:13:32 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	centr(t_win *win)
+void			zoom_in(t_win *win)
 {
-	size_t	i;
-	size_t	j;
-	size_t	scale;
-	t_point	pad;
-	t_list	*tmp;
+	size_t		i;
+	t_list		*tmp;
 
-	scale = WIN_WIDTH > WIN_HEIGHT ? WIN_HEIGHT / win->map_y :
-									WIN_WIDTH / win->map_x;
-	pad.x = (WIN_WIDTH - scale * (win->map_x - 1)) / 2;
-	pad.y = (WIN_HEIGHT - scale * (win->map_y - 1)) / 2;
 	tmp = win->map;
-	j = 0;
 	while (tmp)
 	{
 		i = -1;
 		while(++i < tmp->content_size)
 		{
-			((t_point*)tmp->content)[i].x = -WIN_WIDTH / 2 + scale * i + pad.x;
-			((t_point*)tmp->content)[i].y = -WIN_HEIGHT / 2 + scale * j + pad.y;
-
+			((t_fpoint*)tmp->content)[i].x *= RESCALE_FACTOR;
+			((t_fpoint*)tmp->content)[i].y *= RESCALE_FACTOR;
+			((t_fpoint*)tmp->content)[i].z *= RESCALE_FACTOR;
 		}
-		j++;
-		tmp = tmp->next;
-	}
-}
-
-void	zoom_in(t_win *win)
-{
-	size_t	i;
-	size_t	j;
-	t_point	pad;
-	t_list	*tmp;
-
-	tmp = win->map;
-	pad.x = win->map_x - 1;
-	pad.y = win->map_y - 1;
-	j = 0;
-	while (tmp)
-	{
-		i = -1;
-		while(++i < tmp->content_size)
-		{
-			((t_point*)tmp->content)[i].x += 2 * i - pad.x;
-			((t_point*)tmp->content)[i].y += 2 * j - pad.y;
-		}
-		j++;
 		tmp = tmp->next;
 	}
 	mlx_clear_window(g_srv.mlx_ptr, win->ptr);
 	plot_map(win);
 }
 
-void	zoom_out(t_win *win)
+void			zoom_out(t_win *win)
 {
-	size_t	i;
-	size_t	j;
-	t_point	pad;
-	t_list	*tmp;
+	size_t		i;
+	t_list		*tmp;
 
 	tmp = win->map;
-	if (((t_point*)tmp->content)[0].x == ((t_point*)tmp->content)[1].x)
-		return ;
-	pad.x = win->map_x - 1;
-	pad.y = win->map_y - 1;
-	j = 0;
 	while (tmp)
 	{
 		i = -1;
 		while(++i < tmp->content_size)
 		{
-			((t_point*)tmp->content)[i].x -= 2 * i - pad.x;
-			((t_point*)tmp->content)[i].y -= 2 * j - pad.y;
+			((t_fpoint*)tmp->content)[i].x /= RESCALE_FACTOR;
+			((t_fpoint*)tmp->content)[i].y /= RESCALE_FACTOR;
+			((t_fpoint*)tmp->content)[i].z /= RESCALE_FACTOR;
 		}
-		j++;
 		tmp = tmp->next;
 	}
 	mlx_clear_window(g_srv.mlx_ptr, win->ptr);
 	plot_map(win);
+}
+
+void			iso(t_win *win)
+{
+	size_t		i;
+	t_fpoint	p;
+
+	t_list		*tmp;
+	t_list		*tmp2;
+	tmp = win->map;
+	tmp2 = win->map_copy;
+	while (tmp)
+	{
+		i = -1;
+		while(++i < tmp->content_size)
+		{
+			p.x = ((t_fpoint*)tmp->content)[i].x;
+			p.y = ((t_fpoint*)tmp->content)[i].y;
+			p.z = ((t_fpoint*)tmp->content)[i].z;
+			((t_fpoint*)tmp->content)[i].x = (p.x - p.y) * cos(0);
+			((t_fpoint*)tmp->content)[i].y = -p.z + (p.x + p.y) * sin(0);
+		}
+		tmp = tmp->next;
+		tmp2 = tmp2->next;
+	}
+	mlx_clear_window(g_srv.mlx_ptr, win->ptr);
+	plot_map(win);
+}
+
+void			alt_up(t_win *win)
+{
+	size_t		i;
+	t_list		*tmp;
+
+	tmp = win->map;
+	while (tmp)
+	{
+		i = -1;
+		while(++i < tmp->content_size)
+		{
+			((t_fpoint*)tmp->content)[i].z *= RESCALE_FACTOR;
+		}
+		tmp = tmp->next;
+	}
+	mlx_clear_window(g_srv.mlx_ptr, win->ptr);
+}
+
+void			alt_dwn(t_win *win)
+{
+	size_t		i;
+	t_list		*tmp;
+
+	tmp = win->map;
+	while (tmp)
+	{
+		i = -1;
+		while(++i < tmp->content_size)
+		{
+			((t_fpoint*)tmp->content)[i].z /= RESCALE_FACTOR;
+		}
+		tmp = tmp->next;
+	}
+	mlx_clear_window(g_srv.mlx_ptr, win->ptr);
 }
