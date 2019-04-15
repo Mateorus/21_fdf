@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 14:47:44 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/15 13:53:24 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/15 14:31:11 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,11 @@ int	key_press(int keycode, t_win *win)
 		win->rad.x = 0.95532;
 		plot_map(win);
 	}
-	if ((keycode >= 123 && keycode <= 126) || (keycode >= 24 && keycode <= 33))
+	if ((keycode >= 123 && keycode <= 126) || (keycode >= 24 && keycode <= 33)
+			|| keycode == 0 || keycode == 6)
 	{
+		keycode == 0 ? win->trans.y -= 10 : 0;
+		keycode == 6 ? win->trans.y += 10 : 0;
 		keycode == UP_ARROW ? win->rad.x += ROT_ANGLE : 0;
 		keycode == DWN_ARROW ? win->rad.x -= ROT_ANGLE : 0;
 		keycode == RGH_ARROW ? win->rad.y += ROT_ANGLE : 0;

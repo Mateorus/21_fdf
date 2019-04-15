@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 18:34:28 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/15 12:42:21 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/15 14:09:51 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 # define MINUS			27
 # define LFT_BRACKET	33
 # define RGH_BRACKET	30
+# define CTRL			256
 
 # define STD_COLOR		0x00FFFFFF
 
@@ -97,6 +98,7 @@ typedef struct			s_win
 	t_fpoint	rad;
 	float		zoom;
 	float		alt;
+	t_fpoint	trans;
 }						t_win;
 typedef struct			s_srv
 {
