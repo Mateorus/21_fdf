@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:38:14 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/11 20:44:20 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/15 11:48:41 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,33 @@ static void		plot_line(t_win *win, t_fpoint *p, t_fpoint *pnext, t_list *tmp)
 	}
 }
 
+static void		prepare_map(t_win *win)
+{
+	size_t		i;
+	t_list		*cur;
+	t_list		*cpy;
+	t_fpoint	p;
+
+	cur = win->map;
+	cpy = win->map_copy;
+	while (cur)
+	{
+		i = -1;
+		while (++i < cur->content_size)
+		{
+			p.x = ((t_fpoint*)cpy->content)[i].x;
+			p.y = ((t_fpoint*)cpy->content)[i].y;
+			p.z = ((t_fpoint*)cpy->content)[i].z;
+			morph(&p, win);
+			((t_fpoint*)cur->content)[i].x = p.x;
+			((t_fpoint*)cur->content)[i].y = p.y;
+			((t_fpoint*)cur->content)[i].z = p.z;
+		}
+		cur = cur->next;
+		cpy = cpy->next;
+	}
+}
+
 void			plot_map(t_win *win)
 {
 	t_fpoint	*p;
@@ -90,6 +117,7 @@ void			plot_map(t_win *win)
 	tmp = win->map;
 	ft_assert(!(win->img_ptr = mlx_new_image(g_srv.mlx_ptr, WIDTH,
 				HEIGHT)), "mlx_new_image() failed\n");
+	prepare_map(win);
 	while (tmp)
 	{
 		p = tmp->content;
@@ -97,6 +125,7 @@ void			plot_map(t_win *win)
 		plot_line(win, p, pnext, tmp);
 		tmp = tmp->next;
 	}
+	mlx_clear_window(g_srv.mlx_ptr, win->ptr);
 	mlx_put_image_to_window(g_srv.mlx_ptr, win->ptr, win->img_ptr, 0, 0);
 	mlx_destroy_image(g_srv.mlx_ptr, win->img_ptr);
 }

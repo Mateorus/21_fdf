@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 18:34:28 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/14 23:55:57 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/15 12:42:21 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ typedef struct			s_win
 	size_t		map_x;
 	size_t		map_y;
 	t_fpoint	rad;
+	float		zoom;
+	float		alt;
 }						t_win;
 typedef struct			s_srv
 {
@@ -108,6 +110,7 @@ extern volatile t_srv	g_srv;
 void	get_maps(char **argv, t_win *win);
 void	plot_map(t_win *win);
 int		line_clip(t_point p_a, t_point p_b, t_img img);
+void	morph(t_fpoint *p, t_win *win);
 /*
 **______________________________/src/device_events.c____________________________
 */
@@ -126,18 +129,6 @@ int		win_expose(t_win *win);
 */
 void	pencil(t_point point , void *win_ptr);
 void	put_line_bresenham(t_point p_a, t_point p_b, void *win_ptr);
-/*
-**_________________________________/src/rescale.c_______________________________
-*/
-void	alt_dwn(t_win *win);
-void	alt_up(t_win *win);
-void	zoom_in(t_win *win);
-void	zoom_out(t_win *win);
-void	iso(t_win *win);
-/*
-**_________________________________/src/rotate.c_______________________________
-*/
-void	rotate(t_win *win, float xr, float yr, float zr);
 /*
 ***************************************UTIL*************************************
 */

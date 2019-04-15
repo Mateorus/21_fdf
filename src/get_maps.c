@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:34:25 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/14 14:36:15 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/15 12:38:52 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ void			get_maps(char **argv, t_win *win)
 		get_map(fd, win);
 		centr_map(win);
 		copy_map(win);
+		win->zoom = 1;
+		win->alt = 1;
 		win++;
 		close(fd);
 	}
