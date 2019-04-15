@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 15:01:09 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/14 23:13:32 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/15 00:21:13 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ void			alt_up(t_win *win)
 		}
 		tmp = tmp->next;
 	}
-	mlx_clear_window(g_srv.mlx_ptr, win->ptr);
 }
 
 void			alt_dwn(t_win *win)
@@ -114,5 +113,4 @@ void			alt_dwn(t_win *win)
 		}
 		tmp = tmp->next;
 	}
-	mlx_clear_window(g_srv.mlx_ptr, win->ptr);
 }

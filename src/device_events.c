@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 14:47:44 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/14 15:07:25 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/15 00:19:48 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,19 @@ int	key_press(int keycode, t_win *win)
 {
 	!win->mouse_pressed[1] ? win->key_pressed[keycode] = 1 : 0;
 	keycode == SPACE ? iso(win) : 0;
-	keycode == UP_ARROW ? rotate_x(win, CLOCKWISE) : 0;
-	keycode == DWN_ARROW ? rotate_x(win, C_CLOCKWISE) : 0;
-	keycode == LFT_ARROW ? rotate_y(win, C_CLOCKWISE) : 0;
-	keycode == RGH_ARROW ? rotate_y(win, CLOCKWISE) : 0;
-	keycode == LFT_BRACKET ? rotate_z(win, C_CLOCKWISE) : 0;
-	keycode == RGH_BRACKET ? rotate_z(win, CLOCKWISE) : 0;
+	if ((keycode >= 123 && keycode <= 126) || (keycode >= 24 && keycode <= 33))
+	{
+		keycode == UP_ARROW ? win->rad.x += ROT_ANGLE : 0;
+		keycode == DWN_ARROW ? win->rad.x -= ROT_ANGLE : 0;
+		keycode == RGH_ARROW ? win->rad.y += ROT_ANGLE : 0;
+		keycode == LFT_ARROW ? win->rad.y -= ROT_ANGLE : 0;
+		keycode == RGH_BRACKET ? win->rad.z += ROT_ANGLE : 0;
+		keycode == LFT_BRACKET ? win->rad.z -= ROT_ANGLE : 0;
+		keycode == PLUS ? alt_up(win) : 0;
+		keycode == MINUS ? alt_dwn(win) : 0;
+		rotate(win, win->rad.x, win->rad.y, win->rad.z);
+	}
 	keycode == ESC ? win_close(win) : 0;
-	keycode == PLUS ? alt_up(win) : 0;
-	keycode == MINUS ? alt_dwn(win) : 0;
 	return (0);
 }
 

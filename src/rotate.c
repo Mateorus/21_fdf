@@ -6,82 +6,52 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 15:57:22 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/14 17:08:05 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/15 10:13:44 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void			rotate_x(t_win *win, int direction)
+static void		rotate_xyz(t_fpoint *p, float xr, float yr, float zr)
 {
-	size_t		i;
-	float		f;
 	t_fpoint	prev;
-	t_list		*tmp;
 
-	f = direction ? -ROT_ANGLE : ROT_ANGLE;
-	tmp = win->map;
-	while (tmp)
-	{
-		i = -1;
-		while(++i < tmp->content_size)
-		{
-			prev.y = ((t_fpoint*)tmp->content)[i].y;
-			prev.z = ((t_fpoint*)tmp->content)[i].z;
-			((t_fpoint*)tmp->content)[i].y = prev.y * cos(f) - prev.z * sin(f);
-			((t_fpoint*)tmp->content)[i].z = prev.y * sin(f) + prev.z * cos(f);
-		}
-		tmp = tmp->next;
-	}
-	mlx_clear_window(g_srv.mlx_ptr, win->ptr);
-	plot_map(win);
+		prev.x = p->x;
+		prev.y = p->y;
+		prev.z = p->z;
+		p->x = prev.x;
+		p->y = prev.y * cos(xr) - prev.z * sin(xr);
+		p->z = prev.y * sin(xr) + prev.z * cos(xr);
+		p->x = prev.x * cos(yr) - p->z * sin(yr);
+		p->z = -prev.x * sin(yr) + p->z * cos(yr);
+		p->x = p->x * cos(zr) - p->y * sin(zr);
+		p->y = p->x * sin(zr) + p->y * cos(zr);
 }
 
-void			rotate_y(t_win *win, int direction)
+void			rotate(t_win *win, float xr, float yr, float zr)
 {
 	size_t		i;
-	float		f;
-	t_fpoint	prev;
-	t_list		*tmp;
+	t_list		*cur;
+	t_list		*cpy;
+	t_fpoint	p;
 
-	f = direction ? -ROT_ANGLE : ROT_ANGLE;
-	tmp = win->map;
-	while (tmp)
+	cur = win->map;
+	cpy = win->map_copy;
+	while (cur)
 	{
 		i = -1;
-		while(++i < tmp->content_size)
+		while (++i < cur->content_size)
 		{
-			prev.x = ((t_fpoint*)tmp->content)[i].x;
-			prev.z = ((t_fpoint*)tmp->content)[i].z;
-			((t_fpoint*)tmp->content)[i].x = prev.x * cos(f) + prev.z * sin(f);
-			((t_fpoint*)tmp->content)[i].z = -prev.x * sin(f) + prev.z * cos(f);
+			p.x = ((t_fpoint*)cpy->content)[i].x;
+			p.y = ((t_fpoint*)cpy->content)[i].y;
+			p.z = ((t_fpoint*)cpy->content)[i].z;
+			rotate_xyz(&p, xr, yr, zr);
+			((t_fpoint*)cur->content)[i].x = p.x;
+			((t_fpoint*)cur->content)[i].y = p.y;
+			((t_fpoint*)cur->content)[i].z = p.z;
 		}
-		tmp = tmp->next;
-	}
-	mlx_clear_window(g_srv.mlx_ptr, win->ptr);
-	plot_map(win);
-}
-
-void			rotate_z(t_win *win, int direction)
-{
-	size_t		i;
-	float		f;
-	t_fpoint	prev;
-	t_list		*tmp;
-
-	f = direction ? -ROT_ANGLE : ROT_ANGLE;
-	tmp = win->map;
-	while (tmp)
-	{
-		i = -1;
-		while(++i < tmp->content_size)
-		{
-			prev.x = ((t_fpoint*)tmp->content)[i].x;
-			prev.y = ((t_fpoint*)tmp->content)[i].y;
-			((t_fpoint*)tmp->content)[i].x = prev.x * cos(f) - prev.y * sin(f);
-			((t_fpoint*)tmp->content)[i].y = prev.x * sin(f) + prev.y * cos(f);
-		}
-		tmp = tmp->next;
+		cur = cur->next;
+		cpy = cpy->next;
 	}
 	mlx_clear_window(g_srv.mlx_ptr, win->ptr);
 	plot_map(win);

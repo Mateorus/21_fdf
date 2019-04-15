@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 18:34:28 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/14 15:08:40 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/14 23:55:57 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct			s_win
 	t_list		*map_copy;
 	size_t		map_x;
 	size_t		map_y;
+	t_fpoint	rad;
 }						t_win;
 typedef struct			s_srv
 {
@@ -128,18 +129,15 @@ void	put_line_bresenham(t_point p_a, t_point p_b, void *win_ptr);
 /*
 **_________________________________/src/rescale.c_______________________________
 */
-void	init_plot(t_win *win);
+void	alt_dwn(t_win *win);
+void	alt_up(t_win *win);
 void	zoom_in(t_win *win);
 void	zoom_out(t_win *win);
 void	iso(t_win *win);
 /*
 **_________________________________/src/rotate.c_______________________________
 */
-void	rotate_x(t_win *win, int direction);
-void	rotate_y(t_win *win, int direction);
-void	rotate_z(t_win *win, int direction);
-void	alt_dwn(t_win *win);
-void	alt_up(t_win *win);
+void	rotate(t_win *win, float xr, float yr, float zr);
 /*
 ***************************************UTIL*************************************
 */
