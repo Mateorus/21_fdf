@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 14:47:44 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/15 14:31:11 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/16 11:36:13 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,28 +52,25 @@ int	mouse_move(int x, int y, t_win *win)
 int	key_press(int keycode, t_win *win)
 {
 	!win->mouse_pressed[1] ? win->key_pressed[keycode] = 1 : 0;
-	if (keycode == SPACE)
-	{
-		win->rad.y = 0.785398;
-		win->rad.x = 0.95532;
-		plot_map(win);
-	}
-	if ((keycode >= 123 && keycode <= 126) || (keycode >= 24 && keycode <= 33)
-			|| keycode == 0 || keycode == 6)
-	{
-		keycode == 0 ? win->trans.y -= 10 : 0;
-		keycode == 6 ? win->trans.y += 10 : 0;
-		keycode == UP_ARROW ? win->rad.x += ROT_ANGLE : 0;
-		keycode == DWN_ARROW ? win->rad.x -= ROT_ANGLE : 0;
-		keycode == RGH_ARROW ? win->rad.y += ROT_ANGLE : 0;
-		keycode == LFT_ARROW ? win->rad.y -= ROT_ANGLE : 0;
-		keycode == RGH_BRACKET ? win->rad.z += ROT_ANGLE : 0;
-		keycode == LFT_BRACKET ? win->rad.z -= ROT_ANGLE : 0;
-		keycode == PLUS ? win->alt *= RESCALE_FACTOR : 0;
-		keycode == MINUS ? win->alt /= RESCALE_FACTOR : 0;
-		plot_map(win);
-	}
 	keycode == ESC ? win_close(win) : 0;
+	keycode == SPACE ? win->rad.y = 0.785398 : 0;
+	keycode == SPACE ? win->rad.x = 0.872665 : 0;
+	keycode == SPACE ? win->rad.z = 0.436332 : 0;
+	keycode == UP_ARROW && win->key_pressed[ALT] ? win->trans.y -= 10 : 0;
+	keycode == DWN_ARROW && win->key_pressed[ALT] ? win->trans.y += 10 : 0;
+	keycode == LFT_ARROW && win->key_pressed[ALT] ? win->trans.x -= 10 : 0;
+	keycode == RGH_ARROW && win->key_pressed[ALT] ? win->trans.x += 10 : 0;
+	keycode == UP_ARROW && !win->key_pressed[ALT] ? win->rad.x += RAD : 0;
+	keycode == DWN_ARROW && !win->key_pressed[ALT] ? win->rad.x -= RAD : 0;
+	keycode == RGH_ARROW && !win->key_pressed[ALT] ? win->rad.y += RAD : 0;
+	keycode == LFT_ARROW && !win->key_pressed[ALT] ? win->rad.y -= RAD : 0;
+	keycode == RGH_BRACKET ? win->rad.z += RAD : 0;
+	keycode == LFT_BRACKET ? win->rad.z -= RAD : 0;
+	keycode == PLUS ? win->alt *= RESCALE_FACTOR : 0;
+	keycode == MINUS ? win->alt /= RESCALE_FACTOR : 0;
+	if ((keycode >= 123 && keycode <= 126) || keycode == 33 || keycode == 30 ||
+			keycode == 27 || keycode == 24 || keycode == 49)
+			plot_map(win);
 	return (0);
 }
 

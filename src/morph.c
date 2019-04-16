@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 15:57:22 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/15 15:03:54 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/16 10:40:04 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,16 @@ static void		change_alt(t_fpoint *p, float alt_factor)
 	p->z *= alt_factor;
 }
 
+static void		trans(t_fpoint *p, t_fpoint trans_factor)
+{
+	p->x += trans_factor.x;
+	p->y += trans_factor.y;
+	p->z += trans_factor.z;
+}
+
 void			morph(t_fpoint *p, t_win *win)
 {
+	trans(p, win->trans);
 	change_alt(p, win->alt);
 	rotate_xyz(p, win->rad);
 	zoom(p, win->zoom);

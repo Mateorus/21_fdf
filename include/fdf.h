@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 18:34:28 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/15 14:09:51 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/16 11:54:05 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 
 # define CLOCKWISE		0
 # define C_CLOCKWISE	1
-# define ROT_ANGLE		0.0872665
+# define RAD			0.0872665
 
 # define MAX_WINDOWS	10
 # define WIDTH			750
@@ -50,15 +50,16 @@
 # define SPACE			49
 # define LFT_ARROW		123
 # define RGH_ARROW		124
-# define UP_ARROW		126
 # define DWN_ARROW		125
+# define UP_ARROW		126
 # define PLUS			24
 # define MINUS			27
 # define LFT_BRACKET	33
 # define RGH_BRACKET	30
 # define CTRL			256
+# define ALT			261
 
-# define STD_COLOR		0x00FFFFFF
+# define STD_COLOR		0x4000FF00
 
 /*
 **************************************TYPES*************************************
