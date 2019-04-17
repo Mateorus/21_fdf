@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 12:00:29 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/11 20:45:09 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/17 19:55:55 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static void		put_line(t_point p, t_point diff, t_point incr, t_img img)
 	while (len--)
 	{
 		if (*x >= -WIDTH / 2 && *x < WIDTH / 2 && *y >= -HEIGHT / 2 && *y < HEIGHT / 2)
-			img.ptr[*x + WIDTH / 2 + (*y + HEIGHT / 2) * WIDTH] = p.color;
+			img.ptr[*x + WIDTH / 2 + (*y + HEIGHT / 2) * WIDTH] = gradient(p.color,\
+					diff.color, len + 1, diff.x);
 		p.x += incr.x;
 		d += diff.y << 1;
 		p.y += d > 0 ? incr.y : 0;
@@ -65,6 +66,7 @@ int		line_clip(t_point p_a, t_point p_b, t_img img)
 	incr.y = p_b.y - p_a.y >= 0 ? 1 : -1;
 	diff.x = ft_abs(p_b.x - p_a.x);
 	diff.y = ft_abs(p_b.y - p_a.y);
+	diff.color = p_b.color;
 	if (code1 == 0 && code2 == 0)
 		return (0);
 	else if (code1 & code2)

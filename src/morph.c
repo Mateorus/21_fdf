@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 15:57:22 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/16 10:40:04 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/17 14:01:19 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ static void		zoom(t_fpoint *p, float zoom_factor)
 	p->z *= zoom_factor;
 }
 
-static void		change_alt(t_fpoint *p, float alt_factor)
-{
-	p->z *= alt_factor;
-}
-
 static void		trans(t_fpoint *p, t_fpoint trans_factor)
 {
 	p->x += trans_factor.x;
@@ -49,10 +44,23 @@ static void		trans(t_fpoint *p, t_fpoint trans_factor)
 	p->z += trans_factor.z;
 }
 
+static void		dye_map(t_fpoint *p, t_win *win)
+{
+	if (p->z > win->alt_max * 0.7)
+		p->color = win->color3;
+	else if (p->z < win->alt_max * 0.7 && p->z > win->alt_max * 0.4)
+		p->color = win->color2;
+	else if (p->z < 0)
+		p->color = win->color0;
+	else
+		p->color = win->color1;
+}
+
 void			morph(t_fpoint *p, t_win *win)
 {
+	dye_map(p, win);
 	trans(p, win->trans);
-	change_alt(p, win->alt);
+	p->z *= win->alt;
 	rotate_xyz(p, win->rad);
 	zoom(p, win->zoom);
 }

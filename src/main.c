@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 15:34:41 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/15 12:38:24 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/17 20:11:38 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ void	init(int size, t_win *win)
 		ft_assert(!(win->ptr = mlx_new_window(g_srv.mlx_ptr, WIDTH,
 					HEIGHT, __FILE__)), "mlx_new_window() failed\n");
 		g_srv.win_opened++;
-		win->p.color = STD_COLOR;
+		win->p.color = WHITE;
 		mlx_hook(win->ptr, 2, 0, key_press, win);
 		mlx_hook(win->ptr, 3, 0, key_release, win);
 		mlx_hook(win->ptr, 4, 0, mouse_press, win);
 		mlx_hook(win->ptr, 5, 0, mouse_releas, win);
 		mlx_hook(win->ptr, 6, 0, mouse_move, win);
 		mlx_hook(win->ptr, 12, 0, win_expose, win);
+		mlx_hook(win->ptr, 17, 0, win_close, win);
 		mlx_hook(win->ptr, 17, 0, win_close, win);
 		win++;
 	}

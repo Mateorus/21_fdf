@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 18:34:28 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/16 11:54:05 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/17 14:46:08 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,15 @@
 # define RAD			0.0872665
 
 # define MAX_WINDOWS	10
-# define WIDTH			750
-# define HEIGHT			500
+# define WIDTH			1300
+# define HEIGHT			800
 # define CENTR_FACTOR	0.8
 # define RESCALE_FACTOR	1.1
 # define BPP			4
 
+# define ONE			18
+# define TWO			19
+# define THREE			20
 # define SHIFT			257
 # define ESC			53
 # define SCROLL_UP		4
@@ -59,7 +62,18 @@
 # define CTRL			256
 # define ALT			261
 
-# define STD_COLOR		0x4000FF00
+# define GREEN			0x40006600
+# define BLUE			0x400000FF
+# define WHITE			0x40FFFFFF
+# define BROWN			0x40663300
+# define RED			0x40FF0000
+# define YELLOW			0x40FFFF00
+# define PURPLE			0x407F00FF
+# define CYAN			0x4000FFFF
+# define MAGENTA		0x40FF00FF
+# define GRAY			0x40808080
+# define SILVER			0x40C0C0C0
+# define AZURE			0x40F0FFFF
 
 /*
 **************************************TYPES*************************************
@@ -100,6 +114,12 @@ typedef struct			s_win
 	float		zoom;
 	float		alt;
 	t_fpoint	trans;
+	float		alt_max;
+	float		alt_min;
+	int			color0;
+	int			color1;
+	int			color2;
+	int			color3;
 }						t_win;
 typedef struct			s_srv
 {
@@ -114,6 +134,9 @@ void	get_maps(char **argv, t_win *win);
 void	plot_map(t_win *win);
 int		line_clip(t_point p_a, t_point p_b, t_img img);
 void	morph(t_fpoint *p, t_win *win);
+int		gradient(int str_color, int end_color, int distance, int len);
+void	change_map_color(int keycode, t_win *win);
+void	info(t_win *win);
 /*
 **______________________________/src/device_events.c____________________________
 */

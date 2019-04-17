@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 14:47:44 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/16 11:36:13 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/17 14:11:00 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ int	key_press(int keycode, t_win *win)
 	keycode == LFT_BRACKET ? win->rad.z -= RAD : 0;
 	keycode == PLUS ? win->alt *= RESCALE_FACTOR : 0;
 	keycode == MINUS ? win->alt /= RESCALE_FACTOR : 0;
+	keycode >= ONE && keycode <= THREE ? change_map_color(keycode, win) : 0;
 	if ((keycode >= 123 && keycode <= 126) || keycode == 33 || keycode == 30 ||
-			keycode == 27 || keycode == 24 || keycode == 49)
+			keycode == 27 || keycode == 24 || keycode == 49 || 
+			(keycode >= 18 && keycode <= 20))
 			plot_map(win);
 	return (0);
 }

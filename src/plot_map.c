@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:38:14 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/15 11:48:41 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/17 19:52:52 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static void		put_line(t_point p, t_point diff, t_point incr, t_img img)
 	d = -len;
 	while (len--)
 	{
-		img.ptr[*x + WIDTH / 2 + (*y + HEIGHT / 2) * WIDTH] = p.color;
+		img.ptr[*x + WIDTH / 2 + (*y + HEIGHT / 2) * WIDTH] =
+			gradient(p.color, diff.color, len + 1, diff.x);
 		p.x += incr.x;
 		d += diff.y << 1;
 		p.y += d > 0 ? incr.y : 0;
@@ -60,6 +61,7 @@ static void		put_line_addr(t_point p_a, t_point p_b, t_win *win)
 		img.ptr[p_a.x + WIDTH / 2 + (p_a.y + HEIGHT / 2) * WIDTH] = p_a.color;
 		return ;
 	}
+	diff.color = p_b.color;
 	put_line(p_a, diff, incr, img);
 }
 
@@ -98,10 +100,12 @@ static void		prepare_map(t_win *win)
 			p.x = ((t_fpoint*)cpy->content)[i].x;
 			p.y = ((t_fpoint*)cpy->content)[i].y;
 			p.z = ((t_fpoint*)cpy->content)[i].z;
+			p.color = ((t_fpoint*)cpy->content)[i].color;
 			morph(&p, win);
 			((t_fpoint*)cur->content)[i].x = p.x;
 			((t_fpoint*)cur->content)[i].y = p.y;
 			((t_fpoint*)cur->content)[i].z = p.z;
+			((t_fpoint*)cur->content)[i].color = p.color;
 		}
 		cur = cur->next;
 		cpy = cpy->next;
@@ -110,6 +114,7 @@ static void		prepare_map(t_win *win)
 
 void			plot_map(t_win *win)
 {
+	t_point		img_size;
 	t_fpoint	*p;
 	t_fpoint	*pnext;
 	t_list		*tmp;
@@ -126,6 +131,10 @@ void			plot_map(t_win *win)
 		tmp = tmp->next;
 	}
 	mlx_clear_window(g_srv.mlx_ptr, win->ptr);
+	mlx_put_image_to_window(g_srv.mlx_ptr, win->ptr, win->img_ptr, 0, 0);
+	mlx_destroy_image(g_srv.mlx_ptr, win->img_ptr);
+	ft_assert(!(win->img_ptr = mlx_xpm_file_to_image(g_srv.mlx_ptr,\
+					"commands.xpm", &img_size.x, &img_size.y)), 0);
 	mlx_put_image_to_window(g_srv.mlx_ptr, win->ptr, win->img_ptr, 0, 0);
 	mlx_destroy_image(g_srv.mlx_ptr, win->img_ptr);
 }
