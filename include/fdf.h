@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 18:34:28 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/17 14:46:08 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/17 21:04:55 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ typedef struct			s_win
 	int			color1;
 	int			color2;
 	int			color3;
+	int			counter;
 }						t_win;
 typedef struct			s_srv
 {
@@ -136,7 +137,6 @@ int		line_clip(t_point p_a, t_point p_b, t_img img);
 void	morph(t_fpoint *p, t_win *win);
 int		gradient(int str_color, int end_color, int distance, int len);
 void	change_map_color(int keycode, t_win *win);
-void	info(t_win *win);
 /*
 **______________________________/src/device_events.c____________________________
 */

@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:38:14 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/17 19:52:52 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/17 21:23:59 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void			plot_map(t_win *win)
 	mlx_put_image_to_window(g_srv.mlx_ptr, win->ptr, win->img_ptr, 0, 0);
 	mlx_destroy_image(g_srv.mlx_ptr, win->img_ptr);
 	ft_assert(!(win->img_ptr = mlx_xpm_file_to_image(g_srv.mlx_ptr,\
-					"commands.xpm", &img_size.x, &img_size.y)), 0);
+					"commands_max.xpm", &img_size.x, &img_size.y)), 0);
 	mlx_put_image_to_window(g_srv.mlx_ptr, win->ptr, win->img_ptr, 0, 0);
 	mlx_destroy_image(g_srv.mlx_ptr, win->img_ptr);
 }
