@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:38:14 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/17 21:23:59 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/18 14:02:49 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void		put_line(t_point p, t_point diff, t_point incr, t_img img)
 	d = -len;
 	while (len--)
 	{
-		img.ptr[*x + WIDTH / 2 + (*y + HEIGHT / 2) * WIDTH] =
+		img.ptr[*x + WID / 2 + (*y + HGT / 2) * WID] =
 			gradient(p.color, diff.color, len + 1, diff.x);
 		p.x += incr.x;
 		d += diff.y << 1;
@@ -55,10 +55,10 @@ static void		put_line_addr(t_point p_a, t_point p_b, t_win *win)
 	diff.y = ft_abs(p_b.y - p_a.y);
 	len = diff.x > diff.y ? diff.x : diff.y;
 	if (line_clip(p_a, p_b, img))
-		return;
+		return ;
 	if (!len)
 	{
-		img.ptr[p_a.x + WIDTH / 2 + (p_a.y + HEIGHT / 2) * WIDTH] = p_a.color;
+		img.ptr[p_a.x + WID / 2 + (p_a.y + HGT / 2) * WID] = p_a.color;
 		return ;
 	}
 	diff.color = p_b.color;
@@ -78,7 +78,7 @@ static void		plot_line(t_win *win, t_fpoint *p, t_fpoint *pnext, t_list *tmp)
 	{
 		if (i < size - 1)
 			put_line_addr(f_to_i_point(p[i]), f_to_i_point(p[i + 1]), win);
-		if(pnext && i < size_n)
+		if (pnext && i < size_n)
 			put_line_addr(f_to_i_point(p[i]), f_to_i_point(pnext[i]), win);
 	}
 }
@@ -120,8 +120,8 @@ void			plot_map(t_win *win)
 	t_list		*tmp;
 
 	tmp = win->map;
-	ft_assert(!(win->img_ptr = mlx_new_image(g_srv.mlx_ptr, WIDTH,
-				HEIGHT)), "mlx_new_image() failed\n");
+	ft_assert(!(win->img_ptr = mlx_new_image(g_srv.mlx_ptr, WID,
+				HGT)), "mlx_new_image() failed\n");
 	prepare_map(win);
 	while (tmp)
 	{

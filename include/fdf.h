@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 18:34:28 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/17 21:04:55 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/18 14:10:28 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@
 # define RAD			0.0872665
 
 # define MAX_WINDOWS	10
-# define WIDTH			1300
-# define HEIGHT			800
+# define WID			1700
+# define HGT			1200
 # define CENTR_FACTOR	0.8
 # define RESCALE_FACTOR	1.1
 # define BPP			4
@@ -80,90 +80,91 @@
 */
 typedef struct			s_point
 {
-	int			x;
-	int			y;
-	int			z;
-	uint32_t	color;
+	int					x;
+	int					y;
+	int					z;
+	uint32_t			color;
 }						t_point;
 typedef struct			s_fpoint
 {
-	float		x;
-	float		y;
-	float		z;
-	uint32_t	color;
+	float				x;
+	float				y;
+	float				z;
+	uint32_t			color;
 }						t_fpoint;
 typedef struct			s_img
 {
-	int	*ptr;
-	int	bpp;
-	int	size;
-	int	endian;
+	int					*ptr;
+	int					bpp;
+	int					size;
+	int					endian;
 }						t_img;
 typedef struct			s_win
 {
-	void		*ptr;
-	void		*img_ptr;
-	t_point		p;
-	int			mouse_pressed[8];
-	int			key_pressed[280];
-	t_list		*map;
-	t_list		*map_copy;
-	size_t		map_x;
-	size_t		map_y;
-	t_fpoint	rad;
-	float		zoom;
-	float		alt;
-	t_fpoint	trans;
-	float		alt_max;
-	float		alt_min;
-	int			color0;
-	int			color1;
-	int			color2;
-	int			color3;
-	int			counter;
+	void				*ptr;
+	void				*img_ptr;
+	t_point				p;
+	int					mouse_pressed[8];
+	int					key_pressed[280];
+	t_list				*map;
+	t_list				*map_copy;
+	size_t				map_x;
+	size_t				map_y;
+	t_fpoint			rad;
+	float				zoom;
+	float				alt;
+	t_fpoint			trans;
+	float				alt_max;
+	float				alt_min;
+	int					color0;
+	int					color1;
+	int					color2;
+	int					color3;
 }						t_win;
 typedef struct			s_srv
 {
-	void		*mlx_ptr;
-	int			win_opened;
+	void				*mlx_ptr;
+	int					win_opened;
 }						t_srv;
 extern volatile t_srv	g_srv;
 /*
 ***************************************SRC**************************************
 */
-void	get_maps(char **argv, t_win *win);
-void	plot_map(t_win *win);
-int		line_clip(t_point p_a, t_point p_b, t_img img);
-void	morph(t_fpoint *p, t_win *win);
-int		gradient(int str_color, int end_color, int distance, int len);
-void	change_map_color(int keycode, t_win *win);
+void					get_maps(char **argv, t_win *win);
+void					plot_map(t_win *win);
+int						line_clip(t_point p_a, t_point p_b, t_img img);
+void					morph(t_fpoint *p, t_win *win);
+int						gradient(int str_color, int end_color,
+								int distance, int len);
+void					change_map_color(int keycode, t_win *win);
 /*
 **______________________________/src/device_events.c____________________________
 */
-int		mouse_press(int button, int x, int y, t_win *win);
-int		mouse_releas(int button, int x, int y, t_win *win);
-int		mouse_move(int x, int y, t_win *win);
-int		key_press(int keycode, t_win *win);
-int		key_release(int keycode, t_win *win);
+int						mouse_press(int button, int x, int y, t_win *win);
+int						mouse_releas(int button, int x, int y, t_win *win);
+int						mouse_move(int x, int y, t_win *win);
+int						key_press(int keycode, t_win *win);
+int						key_release(int keycode, t_win *win);
 /*
 **______________________________/src/system_events.c____________________________
 */
-int		win_close(t_win *win);
-int		win_expose(t_win *win);
+int						win_close(t_win *win);
+int						win_expose(t_win *win);
 /*
 **__________________________________/src/paint.c________________________________
 */
-void	pencil(t_point point , void *win_ptr);
-void	put_line_bresenham(t_point p_a, t_point p_b, void *win_ptr);
+void					pencil(t_point point, void *win_ptr);
+void					put_line_bresenham(t_point p_a,
+											t_point p_b, void *win_ptr);
 /*
 ***************************************UTIL*************************************
 */
-int		get_next_line(const int fd, char **line);
-void	ft_assert(int i, char *s);
-int		ft_abs(int n);
-void	ft_swap(int *a, int *b);
-int		get_nbr(char **s);
-t_point	f_to_i_point(t_fpoint p);
-void	rev_list(t_list **start);
-size_t	count_num(char *s);
+int						get_next_line(const int fd, char **line);
+void					ft_assert(int i, char *s);
+int						ft_abs(int n);
+void					ft_swap(int *a, int *b);
+int						get_nbr(char **s);
+t_point					f_to_i_point(t_fpoint p);
+void					rev_list(t_list **start);
+size_t					count_num(char *s);
 #endif

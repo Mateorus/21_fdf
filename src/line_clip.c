@@ -6,21 +6,21 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 12:00:29 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/17 19:55:55 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/18 14:02:30 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int		getcode(t_point p)
+static int		getcode(t_point p)
 {
-	int	code;
+	int			code;
 
 	code = INSIDE;
-	code |= p.x < -WIDTH / 2 ? LEFT : 0;
-	code |= p.x >= WIDTH / 2 ? RIGHT : 0;
-	code |= p.y < -HEIGHT / 2 ? TOP : 0;
-	code |= p.y >= HEIGHT / 2 ? BOTTOM : 0;
+	code |= p.x < -WID / 2 ? LEFT : 0;
+	code |= p.x >= WID / 2 ? RIGHT : 0;
+	code |= p.y < -HGT / 2 ? TOP : 0;
+	code |= p.y >= HGT / 2 ? BOTTOM : 0;
 	return (code);
 }
 
@@ -43,9 +43,9 @@ static void		put_line(t_point p, t_point diff, t_point incr, t_img img)
 	d = -len;
 	while (len--)
 	{
-		if (*x >= -WIDTH / 2 && *x < WIDTH / 2 && *y >= -HEIGHT / 2 && *y < HEIGHT / 2)
-			img.ptr[*x + WIDTH / 2 + (*y + HEIGHT / 2) * WIDTH] = gradient(p.color,\
-					diff.color, len + 1, diff.x);
+		if (*x >= -WID / 2 && *x < WID / 2 && *y >= -HGT / 2 && *y < HGT / 2)
+			img.ptr[*x + WID / 2 + (*y + HGT / 2) * WID] =
+				gradient(p.color, diff.color, len + 1, diff.x);
 		p.x += incr.x;
 		d += diff.y << 1;
 		p.y += d > 0 ? incr.y : 0;
@@ -53,12 +53,12 @@ static void		put_line(t_point p, t_point diff, t_point incr, t_img img)
 	}
 }
 
-int		line_clip(t_point p_a, t_point p_b, t_img img)
+int				line_clip(t_point p_a, t_point p_b, t_img img)
 {
-	int	code1;
-	int	code2;
-	t_point	incr;
-	t_point	diff;
+	int			code1;
+	int			code2;
+	t_point		incr;
+	t_point		diff;
 
 	code1 = getcode(p_a);
 	code2 = getcode(p_b);

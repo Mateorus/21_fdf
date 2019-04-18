@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 14:21:06 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/02 17:01:55 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/18 14:11:29 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strchr(const char *s, int c)
 	while (*tmp)
 	{
 		if (*tmp == c)
-			return (tmp) ;
+			return (tmp);
 		tmp++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 15:57:22 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/17 14:01:19 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/18 13:45:30 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@ static void		rotate_xyz(t_fpoint *p, t_fpoint rad)
 {
 	t_fpoint	prev;
 
-		prev.x = p->x;
-		prev.y = p->y;
-		prev.z = p->z;
-		p->y = prev.y * cos(rad.x) - prev.z * sin(rad.x);
-		p->z = prev.y * sin(rad.x) + prev.z * cos(rad.x);
-		prev.z = p->z;
-		p->x = prev.x * cos(rad.y) - prev.z * sin(rad.y);
-		p->z = -prev.x * sin(rad.y) + prev.z * cos(rad.y);
-		prev.x = p->x;
-		prev.y = p->y;
-		p->x = prev.x * cos(rad.z) - prev.y * sin(rad.z);
-		p->y = prev.x * sin(rad.z) + prev.y * cos(rad.z);
+	prev.x = p->x;
+	prev.y = p->y;
+	prev.z = p->z;
+	p->y = prev.y * cos(rad.x) - prev.z * sin(rad.x);
+	p->z = prev.y * sin(rad.x) + prev.z * cos(rad.x);
+	prev.z = p->z;
+	p->x = prev.x * cos(rad.y) - prev.z * sin(rad.y);
+	p->z = -prev.x * sin(rad.y) + prev.z * cos(rad.y);
+	prev.x = p->x;
+	prev.y = p->y;
+	p->x = prev.x * cos(rad.z) - prev.y * sin(rad.z);
+	p->y = prev.x * sin(rad.z) + prev.y * cos(rad.z);
 }
 
 static void		zoom(t_fpoint *p, float zoom_factor)

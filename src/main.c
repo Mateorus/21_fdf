@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 15:34:41 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/17 21:05:13 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/18 14:03:07 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	init(int size, t_win *win)
 {
 	while (size--)
 	{
-		ft_assert(!(win->ptr = mlx_new_window(g_srv.mlx_ptr, WIDTH,
-					HEIGHT, __FILE__)), "mlx_new_window() failed\n");
+		ft_assert(!(win->ptr = mlx_new_window(g_srv.mlx_ptr, WID,
+					HGT, __FILE__)), "mlx_new_window() failed\n");
 		g_srv.win_opened++;
 		win->p.color = WHITE;
 		mlx_hook(win->ptr, 2, 0, key_press, win);

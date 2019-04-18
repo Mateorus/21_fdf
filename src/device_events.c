@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 14:47:44 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/04/17 14:11:00 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/04/18 13:45:03 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	mouse_press(int button, int x, int y, t_win *win)
 	win->p.y = y;
 	if (button == SCROLL_UP || button == SCROLL_DOWN)
 	{
-		button == SCROLL_UP ? win-> zoom *= RESCALE_FACTOR : 0;
-		button == SCROLL_DOWN ? win-> zoom /= RESCALE_FACTOR : 0;
+		button == SCROLL_UP ? win->zoom *= RESCALE_FACTOR : 0;
+		button == SCROLL_DOWN ? win->zoom /= RESCALE_FACTOR : 0;
 		plot_map(win);
 	}
 	return (0);
@@ -33,7 +33,7 @@ int	mouse_releas(int button, int x, int y, t_win *win)
 	p.x = x;
 	p.y = y;
 	if (win->key_pressed[SHIFT] && win->mouse_pressed[1])
-		put_line_bresenham(win->p, p, win->ptr); 
+		put_line_bresenham(win->p, p, win->ptr);
 	win->mouse_pressed[button] = 0;
 	return (0);
 }
@@ -70,9 +70,9 @@ int	key_press(int keycode, t_win *win)
 	keycode == MINUS ? win->alt /= RESCALE_FACTOR : 0;
 	keycode >= ONE && keycode <= THREE ? change_map_color(keycode, win) : 0;
 	if ((keycode >= 123 && keycode <= 126) || keycode == 33 || keycode == 30 ||
-			keycode == 27 || keycode == 24 || keycode == 49 || 
-			(keycode >= 18 && keycode <= 20))
-			plot_map(win);
+		keycode == 27 || keycode == 24 || keycode == 49 ||
+		(keycode >= 18 && keycode <= 20))
+		plot_map(win);
 	return (0);
 }
 
